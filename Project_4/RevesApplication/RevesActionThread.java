@@ -56,6 +56,22 @@ public class RevesActionThread extends ActionThread
         moveString = "";
 
         // ADD INITIALIZATION CODE HERE
+        // Creates four poles with size for maximum disks
+        a = new Pole("A", MAX_DISKS);
+        b = new Pole("B", MAX_DISKS);
+        c = new Pole("C", MAX_DISKS);
+        d = new Pole("D", MAX_DISKS);
+
+        // Clears any existing disk from the poles
+        while(a.removeDisk() != null){a.removeDisk();}
+        while(b.removeDisk() != null){b.removeDisk();}
+        while(c.removeDisk() != null){c.removeDisk();}
+        while(d.removeDisk() != null){d.removeDisk();}
+
+        // Add disks to pole A in descending order of size
+        for(int i = disks; i >= 1; i--){
+            a.addDisk(new Disk(i));
+        }
 
     }
         
