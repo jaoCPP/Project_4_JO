@@ -72,13 +72,13 @@ public class RevesActionThread extends ActionThread
         for(int i = disks; i >= 1; i--){
             a.addDisk(new Disk(i));
         }
-
     }
         
 
     public void executeApplication()
     {
         // ADD CODE THAT WILL DO A SINGLE EXECUTION
+        moveDisk(a,b);
     }
 
     /**
@@ -92,6 +92,10 @@ public class RevesActionThread extends ActionThread
         Disk toMove = null;
         
         // ADD CODE HERE TO MOVE A DISK FROM ONE POLE TO THE OTHER
+        toMove = from.removeDisk();
+        if(toMove != null){
+            to.addDisk(toMove);
+        }
 
         movesMade++;
         moveString = "Move #" + movesMade 
