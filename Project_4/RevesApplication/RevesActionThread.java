@@ -92,7 +92,9 @@ public class RevesActionThread extends ActionThread
         Disk toMove = null;
         
         // ADD CODE HERE TO MOVE A DISK FROM ONE POLE TO THE OTHER
+        // Remove top disk from "from" pole
         toMove = from.removeDisk();
+        // Adds removed disk to "to" pole
         if(toMove != null){
             to.addDisk(toMove);
         }
