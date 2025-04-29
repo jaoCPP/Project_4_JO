@@ -2,7 +2,6 @@ import animatedapp.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-    
 
 /**
  *  A thread that is used to solve Reve's problem - It is animated.
@@ -78,7 +77,7 @@ public class RevesActionThread extends ActionThread
     public void executeApplication()
     {
         // ADD CODE THAT WILL DO A SINGLE EXECUTION
-        towersOfHanoi(disks, a, d, b);
+        reves(disks, a, d, b, c);
     }
 
     /**
@@ -110,17 +109,48 @@ public class RevesActionThread extends ActionThread
 
     
     // ADD METHODS HERE
-    private void towersOfHanoi(int i, Pole from, Pole to, Pole extra){
-        if(i>0) {
-            // Moves i-1 disk from "from" (source) to the "extra" pole
-            towersOfHanoi(i - 1, from, extra, to);
+    private void towersOfHanoi(int n, Pole from, Pole to, Pole extra){
+        if(n>0) {
+            // Moves n-1 disk from "from" (source) to the "extra" pole
+            towersOfHanoi(n - 1, from, extra, to);
 
-            // Moves the ith disk from "from" (source) to "to" (destination) pole
+            // Moves the nth disk from "from" (source) to "to" (destination) pole
             moveDisk(from, to);
 
-            // Moves i-1 disks from the "extra" pole to "to" (destination) pole
-            towersOfHanoi(i - 1, extra, to, from);
+            // Moves n-1 disks from the "extra" pole to "to" (destination) pole
+            towersOfHanoi(n - 1, extra, to, from);
         }
+    }
+
+    private void reves(int n, Pole from, Pole to, Pole extra1, Pole extra2){
+        // Base case
+        if(n==1){
+            moveDisk(from, to);
+            return;
+        }
+
+        int k = computeK(n);
+
+        reves(n - k, from, extra1, to, extra2);
+        towersOfHanoi(k, from, to, extra2);
+        reves(n - k, extra1, to, from, extra2);
+    }
+
+    private int computeK(int n) {
+        // Solves quadratic equation k^2 + k - 2n = 0; gives k where T_k is approx. n
+        double unRoundedK = (Math.sqrt((double)(1+8*n) - 1) / 2);
+
+        int roundedK;
+
+        // Increments k until T_k > n
+        for(roundedK = (int)unRoundedK; roundedK*(roundedK+1)/2 <= n; roundedK++){}
+
+        // Decrements k until T_k <= n
+        while(roundedK*(roundedK+1)/2 > n){
+            --roundedK;
+        }
+
+        return roundedK;
     }
     
     /***************************************************************************
