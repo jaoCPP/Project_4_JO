@@ -21,6 +21,17 @@ public class RecursiveMaxOfArray
         // ADD YOUR CODE HERE
 //vvvvvvvvv ADDED CODE vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv        
 
+        if (data == null || data.length == 0 || from < 0 || to >= data.length || from > to){
+            throw new BadArgumentsForMaxException("Invalid arguments for max");
+        }
+        if(from == to){
+            return data[from];
+        }
+
+        int current = data[from];
+        int maxOfRest = max(data, from + 1, to);
+        result = Math.max(current, maxOfRest);
+
         return result;
     }
     
