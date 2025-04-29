@@ -78,7 +78,7 @@ public class RevesActionThread extends ActionThread
     public void executeApplication()
     {
         // ADD CODE THAT WILL DO A SINGLE EXECUTION
-        moveDisk(a,b);
+        towersOfHanoi(disks, a, d, b);
     }
 
     /**
@@ -92,9 +92,9 @@ public class RevesActionThread extends ActionThread
         Disk toMove = null;
         
         // ADD CODE HERE TO MOVE A DISK FROM ONE POLE TO THE OTHER
-        // Remove top disk from "from" pole
+        // Remove top disk from "from" (source) pole
         toMove = from.removeDisk();
-        // Adds removed disk to "to" pole
+        // Adds removed disk to "to" (destination) pole
         if(toMove != null){
             to.addDisk(toMove);
         }
@@ -110,6 +110,18 @@ public class RevesActionThread extends ActionThread
 
     
     // ADD METHODS HERE
+    private void towersOfHanoi(int i, Pole from, Pole to, Pole extra){
+        if(i>0) {
+            // Moves i-1 disk from "from" (source) to the "extra" pole
+            towersOfHanoi(i - 1, from, extra, to);
+
+            // Moves the ith disk from "from" (source) to "to" (destination) pole
+            moveDisk(from, to);
+
+            // Moves i-1 disks from the "extra" pole to "to" (destination) pole
+            towersOfHanoi(i - 1, extra, to, from);
+        }
+    }
     
     /***************************************************************************
      * *************************************************************************
